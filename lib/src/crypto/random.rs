@@ -4,13 +4,14 @@
 
 //! Module contains functions for creating cryptographically strong random bytes.
 
-use openssl::rand;
+use rand::RngCore;
 
 use crate::types::byte_string::ByteString;
 
 /// Fills the slice with cryptographically strong pseudo-random bytes
 pub fn bytes(bytes: &mut [u8]) {
-    let _ = rand::rand_bytes(bytes);
+    let mut rng = rand::thread_rng();
+    rng.fill_bytes(bytes);
 }
 
 /// Create a byte string with a number of random characters. Can be used to create a nonce or
